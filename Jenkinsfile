@@ -9,7 +9,7 @@ pipeline {
   
   stages {
     
-   stage("build") {
+   stage("init") {
       
       steps {
           script {
