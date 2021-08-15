@@ -8,20 +8,34 @@ pipeline {
       
       steps {
            echo 'testing the application...'
+           echo "executing pipeline from $BRANCH_NAME"
       }
     }
     
     stage("build") {
+      when {
+        expression {
+          BRANCH_NAME == 'master'
+        }
+      }
       
-      steps {    
+      steps {
+        script {
            echo 'building the application...'
+        }
       }
     }
       
     stage("deploy") {
-      
-      steps {    
+      when {
+        expression {
+          BRANCH_NAME == 'master'
+        }
+      }
+      steps {
+        script {
            echo 'deploying the application...'
+        }
       }
     }   
   }
