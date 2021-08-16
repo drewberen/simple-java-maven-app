@@ -1,4 +1,4 @@
-@Library('jenkins-shared-library')
+@Library('jenkins-shared-library@jenkins-shared-library-classes')
 def gv
 pipeline {
   
