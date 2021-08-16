@@ -29,7 +29,7 @@ pipeline {
       
       steps {
           script {
-           buildImage()
+           buildImage 'drewberen/my-repo:jma-3.0'
 
         }
       }
