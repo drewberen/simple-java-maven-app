@@ -10,7 +10,7 @@ pipeline {
       
       steps {
         script {
-           echo "test is okay"
+
            gv = load "script.groovy"
         }
           
