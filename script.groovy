@@ -1,6 +1,6 @@
 
 def buildJar () {
-  echo "building the application ${env.BRANCH_NAME}"
+  echo "building the application BRANCH_NAME"
   sh 'mvn package'
 }
 
