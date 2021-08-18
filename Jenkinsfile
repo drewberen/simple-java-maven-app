@@ -1,3 +1,4 @@
+#!/usr/bin/env groovy
 
 pipeline {
   
@@ -11,7 +12,7 @@ pipeline {
       steps {
         script {
               echo 'incrementing version'
-              sh 'mvn build-helper:parse-version versions:set \ 
+              sh 'mvn build-helper:parse-version versions:set \
                   -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.nextIncrementalVersion} \ 
                   versions:commit'
               def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
