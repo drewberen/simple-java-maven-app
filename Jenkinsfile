@@ -7,7 +7,7 @@ pipeline {
     maven 'maven-3.8'
   }
   stages {
-     stage("incriment version") {
+     stage("increment version") {
       
       steps {
         script {
