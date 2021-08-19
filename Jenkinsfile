@@ -45,8 +45,8 @@ pipeline {
 
         }
       }
-    }
-      
+    } 
+     
      stage("deploy") {
       
       steps {   
@@ -55,5 +55,22 @@ pipeline {
            }
       }
     }   
+    
+    stage("commit version update") {
+      
+      steps {
+        script {
+          withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]){
+          sh 'git config user.email "jenkins@example.com"'
+          sh 'git config user.name "jenkins"'
+          sh 'git status'
+          sh 'git branch'
+          sh "git remote set-url origin https://${USER}:${PASS}@github.com/drewberen/simple-java-maven-app.git"
+          sh 'git add .'
+          sh 'git commit -m "ci: version bump"'
+          sh 'git push origin HEAD:java-maven-pipeline-increment-version'
+        }
+      }
   }
+
 }
