@@ -26,7 +26,7 @@ pipeline {
       steps {
         script {
            echo 'deploying the application...'
-           def dockerCMD = 'docker run -d -p 8080:8080 drewberen/my-repo:jma-1.0'
+           def dockerCMD = 'docker run -d -p 8080:8080 tomcat'
            sshagent(['ec2-credentials']) {
              sh "ssh -o StrictHostKeyChecking=no ec2-user@34.207.163.164 ${dockerCMD}"
           }
