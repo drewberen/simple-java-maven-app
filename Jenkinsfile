@@ -4,49 +4,46 @@
    credentialsID: 'github-userpass'
   ]
 ) */
+
+/* SHARED LIBRARY + EC2 Docker deployment */
   
-@Library('jenkins-shared-library')
-def gv
+@Library('jenkins-shared-library@jenkins-shared-library-complete-pipeline-ec2') _
+
 pipeline {
   
   agent any
   tools {
     maven 'maven-3.8'
   }
+  environment {
+    IMAGE_NAME = 'drewberen/my-repo:jma-3.0' 
+  }
   stages {
-     stage("initialize") {
-      
-      steps {
-        script {
-           gv = load "script.groovy"
-        }
-          
-      }
-    }
     stage("build jar") {
-      
       steps {
         script {
+           echo 'building application jar.'
            buildJar()
         }
           
       }
     }
     stage("build image") {
-      
       steps {
           script {
-           buildImage 'drewberen/my-repo:jma-3.0'
-
+            echo "building docker image from ${BRANCH_NAME}."
+           buildImage(env.IMAGE_NAME)
         }
       }
     }
-      
      stage("deploy") {
-      
       steps {   
            script {
-            gv.deployApp()
+              echo 'deploying the application...'
+             def dockerCMD = "docker run -p 8080:8080 -d ${IMAGE_NAME}"
+           sshagent(['ec2-credentials']) {
+             sh "ssh -o StrictHostKeyChecking=no ec2-user@34.207.163.164 ${dockerCMD}"
+          }
            }
       }
     }   
